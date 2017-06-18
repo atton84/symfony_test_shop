@@ -1,0 +1,47 @@
+{% extends 'ShopBundle:site:base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+    {% if content['tg'] %}
+          <h2 class="title text-center title_text">Товарные группы</h2>
+                <div class="row">
+              {% for key,val in content['tg'] %}
+                  <div class="col-md-4 text-center">
+                    <a href="/catalog/tm_{{ content['tm'][0]['translit'] }}-{{ content['tm'][0]['id'] }}/tg_{{val['translit'] }}-{{ val['id'] }}/">  <img src="{{ val['image']|getItemThumbnail }}" class="category_picture" alt=""/></a>
+                    <p><a class="text-center" href="/catalog/tm_{{ content['tm'][0]['translit'] }}-{{ content['tm'][0]['id'] }}/tg_{{ val['translit'] }}-{{ val['id'] }}/" class="text-link">{{ val['name'] }}</a></p>
+                  </div>
+
+                   {% if((loop.index)%3==0) %}
+                        </div><div class="row">
+                   {% endif %}
+              {% endfor %}
+          </div>
+
+          {% if content['collection'] %}
+                    <h2 class="title text-center title_text">Коллекции</h2>
+                        <div class="row">
+                         {% for key,val in content['collection'] %}
+                    <div class="col-md-4 text-center">
+                        <a href="/catalog/tm_{{ content['tm'][0]['translit'] }}-{{ content['tm'][0]['id'] }}/collection_{{ val['translit'] }}-{{ val['id'] }}/"><img src="{{ val['image']|getItemThumbnail }}" class="category_picture"  alt=""/></a>
+                        <p><a class="text-center" href="/catalog/tm_{{ content['tm'][0]['translit'] }}-{{ content['tm'][0]['id'] }}/collection_{{ val['translit'] }}-{{ val['id'] }}/" class="text-link">{{ val['name'] }}</a></p>
+                    </div>
+
+                    {% if (loop.index)%3==0 %}
+                        </div><div class="row">
+                    {% endif %}
+                 {% endfor %}
+              </div>
+          {% endif %}
+      <p>{{ content['tm'][0]['descr']|striptags('a')|trim|raw }}</p>
+    {% else %}
+      <div class="message-box">
+        <h3 class='message'>Sorry, nothing was found.</h3>
+        <a href='/'><input type='button' class="btn-submit order_buttons button-center" value="Назад" /></a>
+      </div>
+    {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block stylesheets %}
+        {% stylesheets
+            'bundles/shop/admin/css/bootstrap.min.css'
+            'bundles/shop/admin/css/sb-admin.css'
+            'bundles/shop/admin/css/plugins/morris.css'
+            'bundles/shop/admin/font-awesome/css/font-awesome.min.css'
+            'bundles/shop/admin/css/main.css'
+            output='css/admin/styles.css'
+            filter='cssrewrite'
+        %}
+            <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+</head>
+<body>
+
+{% block body %}
+
+
+{% endblock %}
+
+<script src="/bundles/shop/site/js/jquery.js"></script>
+<script src="/bundles/shop/site/js/bootstrap.min.js"></script>
+<script src="/bundles/shop/admin/js/main.js"></script>
+
+{#<!-- Morris Charts JavaScript -->
+<script src="/bundles/shop/admin/js/plugins/morris/raphael.min.js"></script>
+<script src="/bundles/shop/admin/js/plugins/morris/morris.min.js"></script>
+<script src="/bundles/shop/admin/js/plugins/morris/morris-data.js"></script>#}
+
+</body>
+</html>

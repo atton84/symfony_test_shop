@@ -1,0 +1,29 @@
+{% extends 'ShopBundle:site:base.html.twig' %}
+
+{% block body %}
+  <div class="container">
+    <div class="row">
+      <ul class='sitemap_block'>
+        {% if content['sitemap']['pages'] %}
+
+          <h3 class='title_text'>{{content['sitemap']['pages']['title']}}</h3>
+
+          {% for key,val in content['sitemap']['pages']['content'] %}
+            <li> <a>-</a><a style="font-size:20px" href='/pages/{{val['translit']}}-{{val['page_id']}}/'>{{val['title']}}</a></li>
+          {% endfor %}
+        {% endif %}
+
+        {% if content['sitemap']['catalog'] %}
+          <h3 class='title_text'>{{content['sitemap']['catalog']['title']}}</h3>
+          {% for key,val in content['sitemap']['catalog']['content'] %}
+            <li style="padding-left:{{val['level']?val['level']*20:0 }}px">
+              {% if val['parent_id']!=val['id'] %}<a>-</a><a style="font-size:{{60/((val['parent_system']+val['system']>=4)?4:(val['parent_system']+val['system'])) }}px" href="/catalog/{{root_categories[val['parent_system']]['alias']}}_{{val['parent_translit']}}-{{val['parent_id']}}/{{root_categories[val['system']]['alias']}}_{{val['translit']}}-{{val['id']}}/">{{val['name']}}</a>
+              {% else %}<h3 class='title_text'><a href="/catalog/{{root_categories[val['parent_system']]['alias']}}_{{val['parent_translit']}}-{{val['parent_id']}}/">{{val['name']}}</a></h3>
+              {% endif %}
+            </li>
+          {% endfor %}
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+{% endblock %}

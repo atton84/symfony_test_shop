@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="ShopBundle\Entity\Pictures" table="pictures">
+    <indexes>
+      <index name="object_id" columns="object_id"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="type" type="integer" column="type" nullable="false"/>
+    <field name="objectId" type="integer" column="object_id" nullable="false"/>
+    <field name="url" type="string" column="url" length="400" nullable="false"/>
+    <field name="count" type="integer" column="count" nullable="false"/>
+    <field name="zoom" type="integer" column="zoom" nullable="false"/>
+    <field name="main" type="integer" column="main" nullable="false"/>
+    <field name="visible" type="integer" column="visible" nullable="false"/>
+    <field name="ownerId" type="integer" column="owner_id" nullable="false"/>
+  </entity>
+</doctrine-mapping>

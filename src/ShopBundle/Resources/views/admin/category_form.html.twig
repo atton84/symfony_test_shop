@@ -1,0 +1,56 @@
+{% extends 'ShopBundle:admin:index.html.twig' %}
+
+{% block pages %}
+<div class="row">
+    <div class="col-lg-6">
+        <h2>{{ cat.name }}</h2>
+        <form action="/admin/catalog/category/{% if action=='edit' %}{{ cat.id }}/edit{% else %}create{% endif %}" method="post" role="form">
+
+            <input type="hidden" name="id" value="{{ cat.id }}">
+
+            <div class="form-group">
+                <label>Название</label>
+                <input type="text" class="form-control" name="name" value="{{ cat.name }}">
+            </div>
+
+            <div class="form-group">
+                <label>Описание</label>
+                <textarea name="descr" class="form-control" rows="3">{{ cat.descr|raw }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Описание страницы</label>
+                <textarea name="meta_description" class="form-control" rows="3">{{ cat.meta_description|raw }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Ключевые слова страницы</label>
+                <textarea name="meta_keywords" class="form-control" rows="3">{{ cat.meta_keywords|raw }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Родительская категория</label>
+                <select name="root_cat" class="form-control">
+                    {% for key,item in root_categories.all %}
+                        <option {% if item.id==cat.root_cat %}selected="selected"{% endif %} value="{{ item.id }}">{{ item.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Отображать на сайте</label>
+                <select name="visible" class="form-control">
+                    <option {% if cat.visible==1 %}selected="selected"{% endif %} value="1">Да</option>
+                    <option {% if cat.visible==0 %}selected="selected"{% endif %} value="0">Нет</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-default">Сохранить</button>
+
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+
+        

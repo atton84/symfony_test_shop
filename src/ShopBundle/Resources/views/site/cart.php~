@@ -1,0 +1,53 @@
+<div id="order_block">
+	<img class="preloader" src="<?php echo $this->assetsBaseUrl; ?>/images/elements/preloader.gif"/>
+	<div id="cart_content">
+   <?php if(!empty($cart)):?>
+    <input type='button' class="btn-submit order_buttons" value="Назад" id='cart_back'/>
+	<table>
+	<tr>
+		<th><p>Фото</p></th>
+		<th><p>Наименование</p></th>
+		<th><p>Цена</p></th>
+    <th><p>Скидка</p></th>
+		<th><p>Кол.</p></th>
+		<th><p>Сумма</p></th>
+		<th><p>Удалить</p></th>
+    </tr>
+		<?php foreach($cart as $key=>$val):?>
+		<tr id="r_<?=$key;?>">
+      <td class='cart_picture'><a href="<?=$val['url'];?>"><img width="100px" src="<?=ImageHelper::getItemThumbnail($val['picture'],'/pictures/chapters/');?>"/></a></td>
+			<td class='cart_name'><a href="<?=$val['url'];?>"><?=$val['name'];?></a></td>
+			<td class='cart_price'><p class="price" id="<?=$key;?>"><?=PriceHelper::parse_price($val['price']);?></p></td>
+      <td class='cart_discount'><p class="discount" id="<?=$key;?>"><?=$val['discount'];?> %</p></td>
+			<td class='cart_count'><input type="number" min='1' class='cart_count data input' data-cart-discount='<?=$val['discount'];?>' id='<?=$key;?>' value="<?=$val['count'];?>"/></td>
+			<td class='cart_sum'><p class="sum" id="<?=$key;?>"><?=PriceHelper::count_sum($val['price'],$val['count'],$val['discount']);?></p></td>
+			<td class='cart_delete'><input type='button' class="cart_delete btn-submit" id="<?=$key;?>" value="X"/></td>
+		</tr>
+		<?php endforeach; ?>
+	</table>
+
+	<form action="" id='cart_form' method="post" >
+		<div id="error"></div>
+
+		<ul id='userform'>
+			<li><p>Внимание! Поля отмеченные знаком * обязательны для заполнения.</p></li>
+			<li><label for="surename">Фамилия :</label><input type="text" class="input" name="surename" value=""  id='surename'/></li>
+			<li><label for="name">Имя* :</label><input type="text" class="input required" name="name"  value="" id='name'/></li>
+			<li><label for="patr">Отчество :</label><input type="text" class="input" name="patr" value=""  id='patr'/></li>
+			<li><label for="adres">Адрес :</label><input type="text" class="input" name="adres" value=""  id='adres'/></li>
+			<li><label for="phone">Телефон :</label><input type="text" class="input" name="phone" value=""  id='phone'/></li>
+			<li><label for="email">E-mail* :</label><input type="text" class="input required email" name="email" value=""  id='email'/></li>
+		</ul>
+
+		<input type='button' class="btn-submit order_buttons" value="Отправить" name='sbm' id='cart_send'/>
+		<input type='button' class="btn-submit order_buttons" value="Добавить новый товар" id='cart_back'/>
+
+	</form>
+  <?php else:?>
+      <?php Yii::app()->user->setFlash('message', $this->message(Yii::app()->params['warnings']['cart_is_empty']));
+            echo $this->renderPartial('messages');
+       ?>
+  <?php endif;?>
+	</div>
+</div>
+

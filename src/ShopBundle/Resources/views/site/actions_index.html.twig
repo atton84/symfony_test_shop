@@ -1,0 +1,36 @@
+{% extends 'ShopBundle:site:base.html.twig' %}
+
+{% block body %}
+{% if content['actions'] %}
+  {% for key,val in content['actions'] %}
+    <div class="product-box__one clearfix">
+      <div class="product-box__one-img clearfix archive-block">
+        <img src="{% if content['id']!='all' %}{{val['url']|getItemImage('/pictures/chapters/')}}{% else %}{{val['url']|getItemThumbnail('/pictures/chapters/')}}{% endif %}" class="actions_picture" alt=""/>
+      </div>
+      <div class="product-box__one-text clearfix">
+        <span class="date">{{val['modified']|date('d.m.Y')}}</span>
+        <span class="name-title">{{val['title']}}</span>
+        {% if content['id']!='all' %}
+          <p>{{val['text']|trim|striptags('a')}}</p>
+        {% else %}
+          <p>{{ val['text']|trim|striptags[:100] ~ '...' }}</p>
+          {% if val['discount']>0 %}
+            {% if val['expired'] %}<p>Действует до: {{val['expired']|date('d.m.Y')}}</p>{% endif %}
+            {% if val['discount'] %}<p>Скидка:{{val['discount']}}%</p>{% endif %}
+          {% endif %}
+        {% endif %}
+        {% if content['id']=='all' %}<a href="/actions/{{val['translit']}}-{{val['id']}}/" class='link-archive'>читать акцию »» </a>{% endif %}
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="message-box">
+    <h3 class='message'>Sorry, nothing was found.</h3>
+    <a href='/'><input type='button' class="btn-submit order_buttons button-center" value="Назад" /></a>
+  </div>
+{% endif %}
+{% if content['id']!='all' %}<a href="/actions/" class="link-archive archive-menu">все акции »» </a>{% endif %}
+{% if content['id']!='all' %}<a href="/catalog/action_{{content['actions'][0]['translit']}}-{{content['actions'][0]['id']}}" class="link-archive archive-menu" >перейти к товарам »» </a>{% endif %}
+<div class="padd-30"></div>
+{% endblock %}
+          

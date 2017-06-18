@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+    <!--/hello/{name}-->
+
+    <route id="admin_homepage" path="/admin">
+        <default key="_controller">ShopBundle:Admin:index</default>
+    </route>
+
+    <route id="admin_auth" path="/admin/auth">
+        <default key="_controller">ShopBundle:Admin:auth</default>
+    </route>
+
+    <route id="admin_catalog_categories" path="/admin/catalog/categories/{page}">
+        <default key="_controller">ShopBundle:Admin:categories</default>
+        <requirement key="page">\d+</requirement>
+    </route>
+
+    <route id="admin_catalog_category_view" path="/admin/catalog/category/{catid}/view/{page}">
+        <default key="_controller">ShopBundle:Admin:categoryView</default>
+        <requirement key="catid">\d+</requirement>
+        <requirement key="page">\d+</requirement>
+    </route>
+
+    <route id="admin_catalog_category_edit" path="/admin/catalog/category/{catid}/edit">
+        <default key="_controller">ShopBundle:Admin:categoryEdit</default>
+        <requirement key="catid">\d+</requirement>
+    </route>
+
+    <route id="admin_catalog_category_delete" path="/admin/catalog/category/{catid}/delete">
+        <default key="_controller">ShopBundle:Admin:categoryDelete</default>
+        <requirement key="catid">\d+</requirement>
+    </route>
+
+    <route id="admin_catalog_category_create" path="/admin/catalog/category/create">
+        <default key="_controller">ShopBundle:Admin:categoryCreate</default>
+    </route>
+
+    <route id="admin_catalog_item_edit" path="/admin/catalog/item/{itemid}/edit">
+        <default key="_controller">ShopBundle:Admin:itemEdit</default>
+        <requirement key="itemid">\d+</requirement>
+    </route>
+
+    <route id="admin_catalog_item_delete" path="/admin/catalog/item/{itemid}/delete">
+        <default key="_controller">ShopBundle:Admin:itemDelete</default>
+        <requirement key="itemid">\d+</requirement>
+    </route>
+
+    <route id="admin_catalog_item_create" path="/admin/catalog/item/create">
+        <default key="_controller">ShopBundle:Admin:itemCreate</default>
+    </route>
+
+    <route id="admin_logout" path="/admin/logout">
+        <default key="_controller">ShopBundle:Admin:logout</default>
+    </route>
+
+    <route id="shop_homepage" path="/">
+        <default key="_controller">ShopBundle:Site:index</default>
+    </route>
+
+    <route id="shop_pages" path="/pages/{translit}-{id}/">
+        <default key="_controller">ShopBundle:Site:pages</default>
+        <requirement key="translit">\w+</requirement>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="shop_mainCategories" path="/catalog/{translit}-{id}/">
+        <default key="_controller">ShopBundle:Site:mainCategories</default>
+        <requirement key="translit">(tm_|tg_)\w+</requirement>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="shop_getSecondLevel" path="/catalog/{parent_translit}-{parent_id}/{second_translit}-{second_id}/">
+        <default key="_controller">ShopBundle:Site:getSecondLevel</default>
+        <requirement key="parent_translit">(tm_|tg_)\w+</requirement>
+        <requirement key="second_translit">(tm_|tg_|collection_|gt_)\w+</requirement>
+        <requirement key="parent_id">\d+</requirement>
+        <requirement key="second_id">\d+</requirement>
+    </route>
+
+    <route id="shop_getSecondLevelPages" path="/catalog/{parent_translit}-{parent_id}/{second_translit}-{second_id}/page/{page}/">
+        <default key="_controller">ShopBundle:Site:getSecondLevel</default>
+        <requirement key="parent_translit">\w+</requirement>
+        <requirement key="second_translit">\w+</requirement>
+        <requirement key="parent_id">\d+</requirement>
+        <requirement key="second_id">\d+</requirement>
+        <requirement key="page">\d+</requirement>
+    </route>
+
+    <route id="shop_getSecondaryCategories" path="/catalog/{translit}-{id}/">
+        <default key="_controller">ShopBundle:Site:getSecondaryCategories</default>
+        <requirement key="translit">(collection_|action_|gt_)\w+</requirement>
+        <requirement key="item_id">\d+</requirement>
+    </route>
+
+    <route id="shop_getSecondaryCategoriesPages" path="/catalog/{translit}-{id}/page/{page}/">
+        <default key="_controller">ShopBundle:Site:getSecondaryCategories</default>
+        <requirement key="translit">(collection_|action_|gt_)\w+</requirement>
+        <requirement key="item_id">\d+</requirement>
+        <requirement key="page">\d+</requirement>
+    </route>
+
+    <route id="shop_getPriceGroup" path="/catalog/{translit}-{id}/">
+        <default key="_controller">ShopBundle:Site:getPriceGroup</default>
+        <requirement key="translit">(pg_)\w+</requirement>
+        <requirement key="item_id">\d+</requirement>
+    </route>
+
+    <route id="shop_getPriceGroupPages" path="/catalog/{translit}-{id}/page/{page}/">
+        <default key="_controller">ShopBundle:Site:getPriceGroup</default>
+        <requirement key="translit">(pg_)\w+</requirement>
+        <requirement key="item_id">\d+</requirement>
+        <requirement key="page">\d+</requirement>
+    </route>
+
+    <route id="shop_change_currency" path="/catalog/currency/change/">
+        <default key="_controller">ShopBundle:Site:change_currency</default>
+    </route>
+
+
+    <route id="shop_item" path="/catalog/{item_translit}-{item_id}/">
+        <default key="_controller">ShopBundle:Site:item</default>
+        <requirement key="item_translit">(item_)\w+</requirement>
+        <requirement key="item_id">\d+</requirement>
+    </route>
+
+    <route id="shop_item2" path="/catalog/{parent_translit}-{parent_id}/{item_translit}-{item_id}/">
+        <default key="_controller">ShopBundle:Site:item</default>
+        <requirement key="parent_translit">\w+</requirement>
+        <requirement key="item_translit">(item_)\w+</requirement>
+        <requirement key="parent_id">\d+</requirement>
+        <requirement key="item_id">\d+</requirement>
+    </route>
+
+    <route id="shop_item3" path="/catalog/{parent_translit}-{parent_id}/{second_translit}-{second_id}/{item_translit}-{item_id}/">
+        <default key="_controller">ShopBundle:Site:item</default>
+        <requirement key="parent_translit">\w+</requirement>
+        <requirement key="second_translit">\w+</requirement>
+        <requirement key="item_translit">(item_)\w+</requirement>
+        <requirement key="parent_id">\d+</requirement>
+        <requirement key="second_id">\d+</requirement>
+        <requirement key="item_id">\d+</requirement>
+    </route>
+
+    <route id="shop_news" path="/news/{translit}-{id}/">
+        <default key="_controller">ShopBundle:Site:news</default>
+        <requirement key="translit">\w+</requirement>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="shop_news_all" path="/news/">
+        <default key="_controller">ShopBundle:Site:news</default>
+    </route>
+
+    <route id="shop_actions" path="/actions/{translit}-{id}/">
+        <default key="_controller">ShopBundle:Site:actions</default>
+        <requirement key="translit">\w+</requirement>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="shop_actions_all" path="/actions/">
+        <default key="_controller">ShopBundle:Site:actions</default>
+    </route>
+
+    <route id="shop_sitemap" path="/pages/sitemap/">
+        <default key="_controller">ShopBundle:Site:sitemap</default>
+    </route>
+
+    <route id="shop_search" path="/catalog/search/">
+        <default key="_controller">ShopBundle:Site:search</default>
+    </route>
+
+    <route id="shop_search_item" path="/catalog/search/{item_translit}-{item_id}/">
+        <default key="_controller">ShopBundle:Site:item</default>
+        <requirement key="item_translit">(item_)\w+</requirement>
+        <requirement key="item_id">\d+</requirement>
+    </route>
+
+    <route id="shop_searchPages" path="/catalog/search/page/{page}/">
+        <default key="_controller">ShopBundle:Site:search</default>
+        <requirement key="page">\d+</requirement>
+    </route>
+
+    <route id="shop_cartIndex" path="/catalog/cart/view/">
+        <default key="_controller">ShopBundle:Cart:index</default>
+    </route>
+
+    <route id="shop_cartAdd" path="/catalog/cart/add/{id}/">
+        <default key="_controller">ShopBundle:Cart:add</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="shop_cartDelete" path="/catalog/cart/delete/{id}/">
+        <default key="_controller">ShopBundle:Cart:delete</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="shop_cartUpdate" path="/catalog/cart/update/{id}/{count}/{discount}/">
+        <default key="_controller">ShopBundle:Cart:update</default>
+        <requirement key="id">\d+</requirement>
+        <requirement key="count">\d+</requirement>
+        <requirement key="discount">\d+</requirement>
+    </route>
+
+    <route id="shop_cartSend" path="/catalog/cart/send/">
+        <default key="_controller">ShopBundle:Cart:send</default>
+    </route>
+
+
+</routes>

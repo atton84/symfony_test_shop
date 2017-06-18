@@ -1,0 +1,25 @@
+{% block body %}
+<div id="order_block" style="height:100px">
+	<table>
+	<tr>
+		<td><p>Фото</p></td>
+		<td><p>Наименование</p></td>
+		<td><p>Цена</p></td>
+    <td><p>Скидка</p></td>
+		<td><p>Кол.</p></td>
+		<td><p>Сумма</p></td>
+    </tr>
+		{% for key,val in cart %}
+		<tr id="r_{{key}}">
+			<td class='cart_picture'><a href="{{val['url']}}"><img width="100px" src="{{val['picture']|getItemThumbnail}}"/></a></td>
+			<td class='cart_name'><p>{{val['name']}}</p></td>
+			<td class='cart_price'><p class="price" id="{{key}}">{{val['price']|parse_price}}</p></td>
+      <td class='cart_discount'><p class="discount" id="{{key}}">{{val['discount']}} %</p></td>
+			<td class='cart_count'><p>{{val['count']}}</p></td>
+			<td class='cart_sum'><p class="sum" id="{{key}}">{{val['price']|count_sum(val['count'],val['discount'])}}</p></td>
+		</tr>
+		{% endfor %}
+	</table>
+
+</div>
+{% endblock %}

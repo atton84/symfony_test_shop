@@ -1,0 +1,125 @@
+{% extends 'ShopBundle:site:base.html.twig' %}
+
+{% if content['item'] %}
+    {% set item = content['item'][0] %}
+    {% set price_groups = content['price_groups'] %}
+{% endif %}
+
+{% block body %}
+<div class="container">
+
+{% if item %}
+
+    <div class="row">
+        <div class="product-one clearfix">
+            <div class="product-box__one-img clearfix">
+                <a href="{% if item['zoom']==1 %}/pictures/chapters/{{ item['url'] }}{% else%}#{% endif %}" rel="example_group" class="img_popup {% if item['zoom']==1 %}zoom-popup{% endif %}"><img src="{{item['url']|getItemImage}}" class="item_big_picture"/></a>
+            </div>
+        </div>
+
+        <div class="product-text clearfix">
+            <h3>{{item['name']}} {{item['article']}}</h3>
+            {% if item['descr'] %}<p>{{item['descr']|raw}}</p>{% endif %}
+            <div class="padd-10"></div>
+
+            {% if item['keywords'] %}
+                <p> Ключевые слова:
+                {% set keywords=item['keywords']|split(',') %}
+                    {% set keywords_translit=item['keywords_translit']|split(',') %}
+                    {% for k,v in keywords %}
+                        <a href="/catalog/keyword_{{keywords_translit[k]|trim }}/">{{v}}</a> {% if k<keywords|length-1 %},{% endif %}
+                      {% endfor %}
+                </p>
+            {% endif %}
+            {% if item['size'] %}<p>Размер: {{item['size']|raw}}</p>{% endif %}
+
+          {% if price_groups %}
+            <p> Ценовые категории:
+              {% for k,v in price_groups %}
+                <a href="/catalog/pg_{{v['translit']}}-{{v['id']}}">{{v['name']}}</a> {% if k<price_groups|length-1 %},{% endif %}
+              {% endfor %}
+            </p>
+          {% endif %}
+
+          {% if content['categories'] %}
+
+              {% set tm_url_path=null %}
+              {% set tg_url_path=null %}
+              {% set tm_index=root_categories['tm']['system'] %}
+              {% set tg_index=root_categories['tg']['system'] %}
+
+              {% set tm=content['categories'][tm_index]?content['categories'][tm_index]:null %}
+              {% set tm=tm[0]?tm[0]:null %}
+              {% set tg=content['categories'][tg_index]?content['categories'][tg_index]:null %}
+              {% set tg=tg[0]?tg[0]:null %}
+
+              {% set main_cat_url_path={} %}
+              {% if tm %}
+                  {% set key=root_categories['collection']['system'] %}
+                  {% set value=tm['translit']+"-"+tm['id'] %}
+                  {% set main_cat_url_path=main_cat_url_path|merge({key:value}) %}
+              {% endif %}
+              {% if tg %}
+                  {% set key=root_categories['gt']['system'] %}
+                  {% set value=tg['translit']+"-"+tg['id'] %}
+                  {% set main_cat_url_path=main_cat_url_path|merge({key:value}) %}
+              {% endif %}
+
+               {% for key1,val1 in content['categories'] %}
+                  <p>{{ root_categories[key1]['name'] }}:
+                     {% for key,val in val1 %}
+                        {% if key!=0 %} <a>, </a>{% endif %}
+                        <a href='/catalog/{{root_categories[val['root_cat']]['alias']}}_{{val['translit']}}-{{ val['id']}}/'>{{val['name']}}</a>
+                      {% endfor %}
+                  </p>
+              {% endfor %}
+          {% endif %}
+
+           <div class="padd-10"></div>
+            {% if item['discount']>0 %}<p>Скидка: {{item['discount']}} %</p>{% endif %}
+            <p class="price" id="{{item['id']}}">
+             Цена:{% if item['discount']>0 %}
+                      <span class='old_price'>
+                       {# {% render(controller("ShopBundle:Default:parsePrice",{ 'price': item['price'] })) %} #}
+                          {{ item['price']|parse_price}}
+                      </span>
+                  {% endif %}
+                  <span class='new_price'>
+                   {# {% render(controller("ShopBundle:Default:parsePrice",{ 'price': item['price'],'count':1,'discount':item['discount'] })) %} #}
+                    {{ item['price']|parse_price(1,item['discount'])}}
+                  </span>
+                  {#<a href="#" id="{{item['id']}}" class="cart_order btn-order popup-link">Заказать</a>#}
+            </p>
+        </div>
+
+        {% if content['item']|length>1 %}
+           <div class="product-one-img clearfix">
+               {% for ke,val in content['item'] %}
+                <a href="#" rel="example_group"><img src="{{val['url']|getItemThumbnail}}" data-zoom="{{val['zoom']}}" class="item_small_picture" alt="{{val['name']}}" data-src="{{val['url']|getItemImage}}" ></a>
+               {% endfor %}
+           </div>
+        {% endif %}
+    </div>
+
+    {% if content['interesting_items']|length>0 %}
+            <div id="interesting_block">
+          <h2 class="text-center title">Вас также может заинтересовать:</h2>
+            <div class="row">
+               {% for key,val in content['interesting_items'] %}
+                <div class="col-md-3 text-center">
+                  <a href="{{prev_url}}/item_{{val['translit']}}-{{val['id']}}/" >  <img src="{{val['url']|getItemThumbnail}}" class="item_picture" alt="{{val['name']}}"/></a>
+                  <p><a href="{{prev_url}}/item_{{val['translit']}}-{{val['id']}}/" class="text-link text-center">{{val['name']}}</a></p>
+                </div>
+              {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+{% else %}
+  <div class="message-box">
+    <h3 class='message'>Sorry, nothing was found.</h3>
+    <a href='/'><input type='button' class="btn-submit order_buttons button-center" value="Назад" /></a>
+  </div>
+{% endif %}
+</div>
+{% endblock %}

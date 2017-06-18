@@ -1,0 +1,48 @@
+{% extends 'ShopBundle:site:base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+     <div class="row">
+     <div class="col-md-12">
+    {% if content['tm'] %}
+          <h2 class="title text-center title_text">Торговые марки</h2>
+                <div class="row">
+                    {% for key,val in content['tm'] %}
+                        <div class="col-md-4 text-center">
+                            <a href="/catalog/tg_{{ content['tg'][0]['translit'] }}-{{ content['tg'][0]['id'] }}/tm_{{val['translit'] }}-{{ val['id'] }}/">  <img src="{{ val['image']|getItemThumbnail }}" class="category_picture" alt=""/></a>
+                            <p><a href="/catalog/tg_{{ content['tg'][0]['translit'] }}-{{ content['tg'][0]['id'] }}/tm_{{ val['translit'] }}-{{ val['id'] }}/" class="text-link text-center">{{ val['name'] }}</a></p>
+                        </div>
+
+                        {% if((loop.index)%3==0) %}
+                            </div><div class="row">
+                        {% endif %}
+
+                    {% endfor %}
+                </div>
+
+                {% if content['gt'] %}
+                    <h2 class="title text-center title_text">Группы товаров</h2>
+                        <div class="row">
+                            {% for key,val in content['gt'] %}
+                                <div class="col-md-4 text-center">
+                                    <a href="/catalog/tg_{{ content['tg'][0]['translit'] }}-{{ content['tg'][0]['id'] }}/gt_{{ val['translit'] }}-{{ val['id'] }}/"><img src="{{ val['image']|getItemThumbnail }}" class="category_picture"  alt=""/></a>
+                                    <p><a href="/catalog/tg_{{ content['tg'][0]['translit'] }}-{{ content['tg'][0]['id'] }}/gt_{{ val['translit'] }}-{{ val['id'] }}/" class="text-link text-center">{{ val['name'] }}</a></p>
+                                </div>
+
+                                {% if((loop.index)%3==0) %}
+                                    </div><div class="row">
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                {% endif %}
+        <p>{{ content['tg'][0]['descr']|striptags('a')|trim|raw }}</p>
+    {% else %}
+      <div class="message-box">
+          <h3 class='message'>Sorry, nothing was found.</h3>
+        <a href='/'><input type='button' class="btn-submit order_buttons button-center" value="Назад" /></a>
+      </div>
+    {% endif %}
+       </div>
+     </div>
+    </div>
+{% endblock %}

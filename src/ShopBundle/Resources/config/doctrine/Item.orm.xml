@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="ShopBundle\Entity\Item" table="item">
+    <indexes>
+      <index name="translit" columns="translit"/>
+      <index name="name" columns="name_old"/>
+      <index name="trigramm" columns="trigramm"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="size" type="text" column="size" nullable="false"/>
+    <field name="name" type="string" column="name" length="255" nullable="true"/>
+    <field name="nameOld" type="string" column="name_old" length="255" nullable="true"/>
+    <field name="descr" type="text" column="descr" nullable="true"/>
+    <field name="keywords" type="text" column="keywords" nullable="false"/>
+    <field name="keywordsTranslit" type="text" column="keywords_translit" nullable="false"/>
+    <field name="metaKeywords" type="text" column="meta_keywords" nullable="true"/>
+    <field name="metaDescription" type="text" column="meta_description" nullable="true"/>
+    <field name="price" type="string" column="price" length="200" nullable="false"/>
+    <field name="currency" type="integer" column="currency" nullable="true"/>
+    <field name="visible" type="integer" column="visible" nullable="false"/>
+    <field name="showPrice" type="integer" column="show_price" nullable="false"/>
+    <field name="invalid" type="integer" column="invalid" nullable="false"/>
+    <field name="translit" type="string" column="translit" length="255" nullable="false"/>
+    <field name="trigramm" type="string" column="trigramm" length="1000" nullable="false"/>
+    <field name="article" type="string" column="article" length="50" nullable="false"/>
+    <field name="created" type="date" column="created" nullable="false"/>
+    <field name="modified" type="date" column="modified" nullable="false"/>
+    <field name="createdBy" type="string" column="created_by" length="100" nullable="false"/>
+    <field name="modifiedBy" type="string" column="modified_by" length="100" nullable="false"/>
+    <field name="ownerId" type="integer" column="owner_id" nullable="false"/>
+  </entity>
+</doctrine-mapping>

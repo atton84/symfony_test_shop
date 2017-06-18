@@ -1,0 +1,26 @@
+<?php
+
+namespace ValenciaBundle\Controller;
+
+#use ValenciaBundle\Entity\Settings;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class DefaultController extends Controller
+{
+    public function indexAction($name)
+    {	
+
+    /*$settings = new Settings();*/
+    /*$product->setName('A Foo Bar');
+    $product->setPrice('19.99');
+    $product->setDescription('Lorem ipsum dolor');*/
+
+    /*$em = $this->getDoctrine()->getManager();
+
+    $em->persist($product);
+    $em->flush();*/
+    $this->getDoctrine()->getRepository('ValenciaBundle:Settings');
+
+        return $this->render('ValenciaBundle:Default:index.html.twig', array('name' => $name));
+    }
+}

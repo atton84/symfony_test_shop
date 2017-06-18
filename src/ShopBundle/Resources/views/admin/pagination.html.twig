@@ -1,0 +1,9 @@
+{% if count>1 %}
+    <div class="pagination">
+        {% for page in 1..count-1 %}
+            <a class="btn btn-default {% if curr_page==page %}btn-warning{% endif %}" href="{{uri}}{{ page }}">{{ page }}</a>
+        {% endfor %}
+    </div>
+{% endif %}
+
+        

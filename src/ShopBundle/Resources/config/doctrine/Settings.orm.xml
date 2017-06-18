@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="ShopBundle\Entity\Settings" table="settings">
+    <unique-constraints>
+      <unique-constraint name="key" columns="key"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="key" type="string" column="key" length="300" nullable="false"/>
+    <field name="value" type="text" column="value" nullable="false"/>
+    <field name="module" type="string" column="module" length="100" nullable="false"/>
+    <field name="model" type="string" column="model" length="100" nullable="false"/>
+  </entity>
+</doctrine-mapping>

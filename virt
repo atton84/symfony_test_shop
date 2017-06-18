@@ -1,0 +1,12 @@
+<VirtualHost *:80>
+	ServerName test.tst	
+	DocumentRoot /project_root/web/
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+	<Directory /project_root/web/>
+		Options Indexes FollowSymLinks
+		AllowOverride All
+		allow from all
+	</Directory>
+</VirtualHost>

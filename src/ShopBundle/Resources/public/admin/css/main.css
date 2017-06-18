@@ -1,0 +1,12 @@
+.login-form{
+    width:300px;
+    margin:20% auto;
+}
+
+.curr-pointer{
+    cursor: pointer;
+}
+
+.inline,.inline *{
+    display: inline;
+}

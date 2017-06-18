@@ -1,0 +1,57 @@
+class ImageHelper
+{
+
+  private static function getImage($file,$dir,$show_thumbnail=true){
+
+    $result="";
+
+    $dir_path=explode('/',$dir);
+    $dir=implode('/',array_filter($dir_path)).'/';
+
+    if(isset($file)&&isset($dir))
+      if(is_dir($dir.'thumbs/')&&is_file($dir.'thumbs/'.$file)&&$show_thumbnail)
+        $result=$dir.'thumbs/'.$file;
+      else if(is_file($dir.$file))
+        $result=$dir.$file;
+
+    return $result;
+
+  }
+
+  public static function getItemThumbnail($file,$dir)
+  {
+    $result="pictures/noimage/no-image.gif";
+
+    $image=self::getImage($file,$dir);
+    $result=!empty($image)?$image:$result;
+    $result=(!empty($result)?"/":"").$result;
+
+    return $result;
+
+  }
+
+  public static function getItemImage($file,$dir)
+  {
+    $result="pictures/noimage/no-image.gif";
+
+    $image=self::getImage($file,$dir,false);
+    $result=!empty($image)?$image:$result;
+    $result=(!empty($result)?"/":"").$result;
+
+    return $result;
+
+  }
+
+
+  public static function getCategoryThumbnail($file,$dir)
+  {
+    $result="";
+
+    $image=self::getImage($file,$dir);
+    $result=!empty($image)?$image:$result;
+    $result=(!empty($result)?"/":"").$result;
+
+    return $result;
+  }
+
+}

@@ -1,0 +1,44 @@
+{% extends 'ShopBundle:admin:index.html.twig' %}
+
+{% block pages %}
+<div class="row">
+    <div class="col-lg-12">
+        <h2>Товары</h2>
+        <a href="/admin/catalog/item/create" class="btn btn-danger">Создать</a>
+        <br/><br/>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Название</th>
+                    <th>Цена</th>
+                    <th>Создан</th>
+                    <th>Изменён</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in items_list.items %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.created }}</td>
+                        <td>{{ item.modified }}</td>
+                        <td>
+                            <a href="/admin/catalog/item/{{ item.id }}/edit" class="glyphicon glyphicon-edit list curr-pointer"></a>&nbsp;&nbsp;
+                            <a href="/admin/catalog/item/{{ item.id }}/delete" class="glyphicon glyphicon-remove list curr-pointer"></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% include "ShopBundle:admin:pagination.html.twig" with {count:items_list.count,curr_page:curr_page,uri:"/admin/catalog/category/"~catid~"/view/"} only %}
+    </div>
+</div>
+{% endblock %}
+
+
+        

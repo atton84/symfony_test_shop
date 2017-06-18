@@ -1,0 +1,46 @@
+{% extends 'ShopBundle:site:base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+       <div class="row">
+           {% if content['items'] %}
+             {% for key,val in content['items'] %}
+
+                    <div class="col-md-4 text-center">
+                         <a href="/{{ url_without_pages }}/item_{{ val['translit'] }}-{{ val['id'] }}"><img src="{{ val['url']|getItemThumbnail }}" class="item_picture" alt=""/></a>
+                         <p>{{ val['name'] }} {{ val['article'] }} </p>
+                         {% if val['discount']>0 %}<p>Скидка: {{ val['discount'] }} %</p>{% endif %}
+                         <p class="price" id="{{ val['id'] }}">Цена:
+                           {% if val['discount']>0 %}
+                           <span class='old_price'>
+                                {{ val['price']|parse_price }}
+                            </span>
+                           {% endif%}
+                           <span class='new_price'>
+                               {{ val['price']|parse_price(1,val['discount']) }}
+                           </span>
+                         </p>
+                    </div>
+
+                     {% if (loop.index)%3==0 %}
+                       </div> <div class="row">
+                     {% endif %}
+
+              {% endfor %}
+            </div>
+        {% include "ShopBundle:site:pagination.html.twig" with {count:pages,curr_page:current_page,uri:url_without_pages} only %}
+
+           {% if content['category'] %}
+              <p>{{ content['category'][0]['descr']|raw|striptags('a') }}</p>
+           {% endif %}
+          {% else %}
+              <div class="message-box">
+                <h3 class='message'>Sorry, nothing was found.</h3>
+                <a href='{{  app.request.headers.get('referer') }}'><input type='button' class="btn-submit order_buttons button-center" value="Назад" /></a>
+              </div>
+          {% endif %}
+    </div>
+{% endblock %}
+
+
+        

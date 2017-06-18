@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="ShopBundle\Entity\CategoryExt" table="category_ext">
+    <indexes>
+      <index name="category_id" columns="category_id"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="categoryId" type="integer" column="category_id" nullable="false"/>
+    <field name="name" type="string" column="name" length="100" nullable="false"/>
+    <field name="value" type="string" column="value" length="100" nullable="false"/>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,31 @@
+{% extends 'ShopBundle:site:base.html.twig' %}
+
+{% block body %}
+{% if content['news'] %}
+  {% for key,val in content['news'] %}
+    <div class="product-box__one clearfix">
+      <div class="product-box__one-img clearfix" style="height:162px">
+        <img src="{% if content['id']!='all' %}{{ val['url']|getItemImage('/pictures/news/') }}{% else %}{{ val['url']|getItemThumbnail('/pictures/news/') }}{% endif %}" class="news_picture" alt=""/>
+      </div>
+      <div class="product-box__one-text clearfix">
+        <span class="date">{{ val['modified']|date('d.m.Y') }}</span>
+        <span class="name-title">{{ val['title'] }}</span>
+        {% if content['id']!='all' %}
+          <p>{{val['text']|trim|striptags('a') }}</p>
+        {% else %}
+          <p>{{ val['text']|trim|striptags[:100] ~ '...' }}</p>
+        {% endif %}
+        {% if content['id']=='all' %}<a href="/news/{{val['translit']}}-{{val['id']}}/" class='link-archive'>читать новость »» </a>{% endif %}
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="message-box">
+    <h3 class='message'>Sorry, nothing was found.</h3>
+    <a href='/'><input type='button' class="btn-submit order_buttons button-center" value="Назад" /></a>
+  </div>
+{% endif %}
+{% if content['id']!='all' %}<a href="/news/" class="link-archive">архив новостей »» </a>{% endif %}
+<div class="padd-30"></div>
+{% endblock %}
+

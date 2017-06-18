@@ -1,0 +1,12 @@
+{% if app.session.flashbag.has('message') %}
+  <div class="message-box">
+    <h3 class='message'>
+        {% for flashMessage in app.session.flashbag.get('message') %}
+
+        {{ flashMessage }}
+
+        {% endfor %}
+    </h3>
+    <input type='button' class="btn-submit order_buttons button-center" id='cart_back' value="Назад" />
+  </div>
+{% endif  %}

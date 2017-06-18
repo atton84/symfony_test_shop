@@ -1,0 +1,71 @@
+{% extends 'ShopBundle:admin:index.html.twig' %}
+
+{% block pages %}
+<div class="row">
+    <div class="col-lg-6">
+        <h2>{{ item.item.name }}</h2>
+        <form action="/admin/catalog/item/{% if action=='edit' %}{{ item.item.id }}/edit{% else %}create{% endif %}" method="post" role="form">
+
+            <input type="hidden" name="id" value="{{ item.item.id }}">
+
+            <div class="form-group">
+                <label>Название</label>
+                <input type="text" class="form-control" name="name" value="{{ item.item.name }}">
+            </div>
+
+            <div class="form-group">
+                <label>Описание</label>
+                <textarea name="descr" class="form-control" rows="3">{{ item.item.descr|raw }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Описание страницы</label>
+                <textarea name="meta_description" class="form-control" rows="3">{{ item.item.meta_description|raw }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Ключевые слова страницы</label>
+                <textarea name="meta_keywords" class="form-control" rows="3">{{ item.item.meta_keywords|raw }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Размер</label>
+                <input type="text" class="form-control" name="size" value="{{ item.item.size }}">
+            </div>
+
+            <div class="form-group">
+                <label>Цена</label>
+                <input type="text" class="form-control" name="price" value="{{ item.item.price }}">
+            </div>
+
+            <div class="form-group">
+                {% for key,cats in cats_by_root %}
+                    <h2>{{ root_categories[key].name }}</h2>
+                    {% for key1,cat in cats %}
+                    <div class="{% if root_categories[key].alias=='tm' %}radio{% else %}checkbox{% endif %}-inline">
+                        <label>
+                            <input type="{% if root_categories[key].alias=='tm' %}radio{% else %}checkbox{% endif %}" name="{% if root_categories[key].alias=='tm' %}relations[{{ key }}]{% else %}relations[{{ key }}][{{ cat.id }}]{% endif %}"  {% if item.relations[root_categories[key].system][cat.id] %}checked="checked"{% endif %} value="{{ cat.id }}"/>
+                            {{ cat.name }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label>Отображать на сайте</label>
+                <select name="visible" class="form-control">
+                    <option {% if item.item.visible==1 %}selected="selected"{% endif %} value="1">Да</option>
+                    <option {% if item.item.visible==0 %}selected="selected"{% endif %} value="0">Нет</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-default">Сохранить</button>
+
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+
+        
